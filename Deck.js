@@ -59,13 +59,21 @@ function Deck(decklist, format) {
       }
     }
 
-    if (this.size < 60) return false;
+    if (format === 'commander') {
+      if (this.size < 99) return false;
+    } else {
+      if (this.size < 60) return false;
+    }
 
     const whitelist = JSON.parse(fs.readFileSync(`./whitelists/${this.format}.json`));
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
         if (whitelist.indexOf(this.cards[card].name) === -1) {
-          return false;
+          if (format === 'vintage') {
+            // add special checks
+          } else {
+            return false;
+          }
         }
       }
     }
