@@ -4,7 +4,7 @@ const fs = require('fs');
 
 fs.readFile('decklist.txt', 'utf8', function(err, decklist) {
   if (err) throw err;
-  const format = 'legacy'
+  const format = 'vintage';
   var deck = new Deck.Deck(decklist, format)
   console.log(deck.isLegal ?
     `Decklist is legal for ${format}!`

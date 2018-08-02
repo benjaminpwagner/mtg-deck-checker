@@ -68,15 +68,24 @@ function Deck(decklist, format) {
     const whitelist = JSON.parse(fs.readFileSync(`./whitelists/${this.format}.json`));
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
-        if (whitelist.indexOf(this.cards[card].name) === -1) {
-          if (format === 'vintage') {
-            // add special checks
-          } else {
+        if (format === 'vintage') {
+          if (whitelist['whitelist'].indexOf(this.cards[card].name) === -1) {
+            if (whitelist['restricted'].indexOf(this.cards[card].name) === -1) {
+              return false;
+            } else {
+              if (this.cards[card].amount > 1) {
+                return false;
+              }
+            }
+          }
+        } else {
+          if (whitelist.indexOf(this.cards[card].name) === -1) {
             return false;
           }
         }
       }
     }
+
     return true;
   }
 
