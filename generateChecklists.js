@@ -1,59 +1,139 @@
 const fs = require('fs');
+
 var ScryfallClient = require('scryfall-client');
 var scryfall = new ScryfallClient();
 
+const allCards = JSON.parse(fs.readFileSync(`./whitelists/AllCards.json`));
+var cardData = {};
+
 var checklists = {
-  standard: [],
-  modern: [],
-  frontier: [],
-  pauper: [],
-  legacy: [],
+  standard: {
+    whitelist: [],
+  },
+  frontier: {
+    whitelist: [],
+  },
+  modern: {
+    whitelist: [],
+    banlist: []
+  },
+  pauper: {
+    whitelist: [],
+    banlist: []
+  },
+  legacy: {
+    banlist: []
+  },
   vintage: {
-    banned: [],
+    banlist: [],
     restricted: []
-  }
+  },
+  commander: {
+    whitelist: [],
+    banlist: []
+  },
 };
-var cardName = "Ancestral Recall"
+
+var skipped = [];
 
 var parseCard = async function(cardName) {
-  scryfall.get('cards/search', {
-    q: cardName
-  }).then(function (cards) {
-    cards.forEach(function (card) {
-      if (card.name === cardName) {
+  try {
+    await scryfall.get('cards/search', {
+      q: cardName
+    }).then(function (cards) {
+      cards.forEach(function (card) {
+        if (card.name === cardName) {
+          // stores scryfall card obj in our own json for later use
+          cardData[cardName] = card;
 
-        if (card.legalities.standard === 'legal') {
-          checklists.standard.push(cardName);
-        }
+          // STANDARD CHECKLISTS
+          if (card.legalities.standard === 'legal') {
+            checklists.standard.whitelist.push(cardName);
+          }
 
-        if (card.legalities.modern === 'legal') {
-          checklists.modern.push(cardName);
-        }
+          // FRONTIER CHECKLISTS
+          if (card.legalities.frontier === 'legal') {
+            checklists.frontier.whitelist.push(cardName);
+          }
 
-        if (card.legalities.frontier === 'legal') {
-          checklists.frontier.push(cardName);
-        }
+          // MODERN CHECKLISTS
+          if (card.legalities.modern === 'legal') {
+            checklists.modern.whitelist.push(cardName);
+          }
 
-        if (card.legalities.pauper === 'legal') {
-          checklists.pauper.push(cardName);
-        }
+          if (card.legalities.modern === 'not_legal') {
+            checklists.modern.banlist.push(cardName);
+          }
 
-        if (card.legalities.legacy === 'not_legal') {
-          checklists.legacy.push(cardName);
-        }
+          // PAUPER CHECKLISTS
+          if (card.legalities.pauper === 'legal') {
+            checklists.pauper.whitelist.push(cardName);
+          }
 
-        if (card.legalities.vintage === 'not_legal') {
-          checklists.vintage.banned.push(cardName);
-        }
-        console.log(card.legalities.vintage)
-        if (card.legalities.vintage === 'restricted') {
-          checklists.vintage.restricted.push(cardName);
-        }
+          if (card.legalities.pauper === 'not_legal') {
+            checklists.pauper.banlist.push(cardName);
+          }
 
-      }
+          // LEGACY CHECKLISTS
+          if (card.legalities.legacy === 'not_legal') {
+            checklists.legacy.banlist.push(cardName);
+          }
+
+          // VINTAGE CHECKLISTS
+          if (card.legalities.vintage === 'not_legal') {
+            checklists.vintage.banlist.push(cardName);
+          }
+
+          if (card.legalities.vintage === 'restricted') {
+            checklists.vintage.restricted.push(cardName);
+          }
+
+          // COMMANDER CHECKLISTS
+          if (card.legalities.commander === 'legal') {
+            checklists.pauper.whitelist.push(cardName);
+          }
+
+          if (card.legalities.commander === 'not_legal') {
+            checklists.pauper.banlist.push(cardName);
+          }
+
+        }
+      })
     })
-  console.log(checklists)
-  })
+  } catch(error) {
+    skipped.push(cardName);
+  }
 }
 
-parseCard("Swamp");
+var get = async function() {
+  var count = 0;
+  for (card in allCards) {
+    if (allCards.hasOwnProperty(card)) {
+      console.log(++count, card);
+      await parseCard(card);
+
+      // for testing purposes...
+      if (count === 10) break
+    }
+  }
+
+  // writes all lists to individual files
+  for (format in checklists) {
+    if (checklists.hasOwnProperty(format)) {
+      for (list in checklists[format]) {
+        if (checklists[format].hasOwnProperty(list)) {
+          fs.writeFileSync(`./checklists/${format}/${list}.json`,
+              JSON.stringify( checklists[format][list], undefined, 2  )  );
+        }
+      }
+    }
+  }
+
+  fs.writeFileSync('cardData.json', JSON.stringify(cardData, undefined, 2));
+
+  fs.writeFileSync('./checklists/skipped.json',
+      JSON.stringify( skipped, undefined, 2 ));
+
+}
+
+get();
