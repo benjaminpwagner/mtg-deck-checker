@@ -90,11 +90,11 @@ var parseCard = async function(cardName) {
 
           // COMMANDER CHECKLISTS
           if (card.legalities.commander === 'legal') {
-            checklists.pauper.whitelist.push(cardName);
+            checklists.commander.whitelist.push(cardName);
           }
 
           if (card.legalities.commander === 'not_legal') {
-            checklists.pauper.banlist.push(cardName);
+            checklists.commander.banlist.push(cardName);
           }
 
         }
@@ -113,7 +113,7 @@ var get = async function() {
       await parseCard(card);
 
       // for testing purposes...
-      if (count === 10) break
+      // if (count === 10) break
     }
   }
 
@@ -136,4 +136,20 @@ var get = async function() {
 
 }
 
-get();
+var genCardDataLight = () => {
+  var cardDataLight = {};
+  const cardData = JSON.parse( fs.readFileSync('cardData.json') );
+  for (card in cardData) {
+    if (cardData.hasOwnProperty(card)) {
+      cardDataLight[card] = {
+        name: cardData[card].name,
+        colors: cardData[card].colors,
+        legalities: cardData[card].legalities,
+        set: cardData[card].set
+      }
+    }
+  }
+  fs.writeFileSync('cardDataLight.json', JSON.stringify(cardDataLight, undefined, 2));
+}
+
+genFromCardData();

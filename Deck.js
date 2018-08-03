@@ -7,16 +7,12 @@ function Deck(decklist, format) {
   this.size = 0;
 
   this.addCard = (card, amount) => {
-    const cardName = card
-      .toLowerCase()
-      .replace(/[ -!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/gi, '');
 
-    if (this.cards.hasOwnProperty(cardName)) {
-      this.cards[cardName].amount += parseInt(amount);
+    if (this.cards.hasOwnProperty(card)) {
+      this.cards[card].amount += parseInt(amount);
     } else {
-      this.cards[cardName] = {
+      this.cards[card] = {
         amount: parseInt(amount),
-        name: card
       }
     }
   }
@@ -65,26 +61,41 @@ function Deck(decklist, format) {
       if (this.size < 60) return false;
     }
 
-    const whitelist = JSON.parse(fs.readFileSync(`./whitelists/${this.format}.json`));
+    const cardData = JSON.parse(fs.readFileSync(`cardDataLight.json`));
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
-        if (format === 'vintage') {
-          if (whitelist['whitelist'].indexOf(this.cards[card].name) === -1) {
-            if (whitelist['restricted'].indexOf(this.cards[card].name) === -1) {
+        if (cardData[card].legalities[this.format] !== 'legal') {
+          if (cardData[card].legalities[this.format] === 'restricted') {
+            if (this.cards[card].amount > 1) {
               return false;
-            } else {
-              if (this.cards[card].amount > 1) {
-                return false;
-              }
             }
-          }
-        } else {
-          if (whitelist.indexOf(this.cards[card].name) === -1) {
+          } else {
             return false;
           }
         }
       }
     }
+
+    // const whitelist = JSON.parse(fs.readFileSync(`./whitelists/${this.format}.json`));
+    // for (card in this.cards) {
+    //   if (this.cards.hasOwnProperty(card)) {
+    //     if (format === 'vintage') {
+    //       if (whitelist['whitelist'].indexOf(this.cards[card].name) === -1) {
+    //         if (whitelist['restricted'].indexOf(this.cards[card].name) === -1) {
+    //           return false;
+    //         } else {
+    //           if (this.cards[card].amount > 1) {
+    //             return false;
+    //           }
+    //         }
+    //       }
+    //     } else {
+    //       if (whitelist.indexOf(this.cards[card].name) === -1) {
+    //         return false;
+    //       }
+    //     }
+    //   }
+    // }
 
     return true;
   }
