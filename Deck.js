@@ -153,15 +153,16 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
         if (cardData[card].legalities[this.format] !== 'legal') {
 
           // not legal? maybe is restricted...
-          if (cardData[card].legalities[this.format] === 'restricted') {
+          if (cardData[card].legalities[this.format] === 'restricted' && this.format === 'vintage') {
 
             // its restricted, but are we playing just one copy?
             if (this.cards[card].amount > 1) {
               this.errors.push( `${card} is restricted.` );
             }
           }
+
+          // okay, its not legal nor restricted
           else {
-            // okay, its not legal nor restricted
             this.errors.push( `${card} is not legal in ${this.format}.` );
           }
         }
