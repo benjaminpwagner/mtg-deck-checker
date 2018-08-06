@@ -130,12 +130,6 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   // }
 }
 
-Deck.prototype.update = function(decklist, format) {
-  this.decklist = decklist;
-  this.format = format;
-  this.check();
-}
-
 module.exports = {
   Deck
 }
