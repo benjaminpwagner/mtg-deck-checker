@@ -8,5 +8,8 @@
   },
   "author": "benjaminpwagner@gmail.com",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "sha1": "^1.1.1",
+    "utf8": "^3.0.0"
+  }
 }

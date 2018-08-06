@@ -1,4 +1,5 @@
 const fs = require('fs');
+const sha1 = require('sha1');
 
 function Deck(decklist, format) {
 
@@ -42,15 +43,23 @@ Deck.prototype.addCard = function(card, amount) {
 
 Deck.prototype.parseList = function() {
   this.cards = {};
+  var toHash = [];
   this.list
     .split('\n')
     .forEach(line => {
       if(line !== '' && line.indexOf('//') === -1) {
         const regexData = line.match(/[0-9]+/);
-        name = line.slice(regexData[0].length+regexData.index+1);
-        this.addCard(name, parseInt(regexData[0]));
+        var name = line.slice(regexData[0].length+regexData.index+1);
+        var amount = parseInt(regexData[0])
+        this.addCard(name, amount);
+        toHash.push( line.indexOf('SB') === -1 ?
+          `${amount} ${name.toLowerCase()}`
+          :`SB:${amount} ${name.toLowerCase()}`
+        )
       }
     });
+    console.log(toHash.sort().join('\n'))
+  console.log(sha1(toHash.join(';')))
 }
 
 Deck.prototype.check = function(decklist=undefined,format=undefined) {
@@ -196,6 +205,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   else {
     for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
   }
+
 }
 
 module.exports = {

@@ -1,6 +1,6 @@
-console.time("check");
 const Deck = require('./Deck.js');
 const fs = require('fs');
+console.time("check");
 
 var checkLegality = (deck) => {
   if (deck.format !== 'historic') {
@@ -24,9 +24,9 @@ fs.readFile('decklist.txt', 'utf8', function(err, decklist) {
   var deck = new Deck.Deck(decklist, format)
   checkLegality(deck);
 
-  format = 'commander';
-  deck.check(undefined, format);
-  checkLegality(deck);
+  // format = 'commander';
+  // deck.check(undefined, format);
+  // checkLegality(deck);
 });
 
 console.timeEnd("check");
