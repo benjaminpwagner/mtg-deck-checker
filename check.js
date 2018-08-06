@@ -25,8 +25,8 @@ fs.readFile('decklist.txt', 'utf8', function(err, decklist) {
   checkLegality(deck);
 
   format = 'commander';
-  // deck.check(undefined, format);
-  // checkLegality(deck);
+  deck.check(undefined, format);
+  checkLegality(deck);
 });
 
 console.timeEnd("check");

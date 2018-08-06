@@ -1,8 +1,23 @@
 const fs = require('fs');
 
 function Deck(decklist, format) {
+
+  const validFormats = [
+      'modern',
+      'standard',
+      'legacy',
+      'vintage',
+      'historic',
+      'commander',
+      'pauper',
+  ];
+
+  if (validFormats.indexOf(format.toLowerCase()) === -1) {
+    throw(`${format} is not a valid format.`)
+  }
+
   this.list = decklist;
-  this.format = format;
+  this.format = format.toLowerCase();
 
   // default values
   // these values are reset by Deck.check()
@@ -145,10 +160,10 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
               this.errors.push( `${card} is restricted.` );
             }
           }
-        }
-        else {
-          // okay, its not legal nor restricted
-          this.errors.push( `${card} is not legal in ${this.format}.` );
+          else {
+            // okay, its not legal nor restricted
+            this.errors.push( `${card} is not legal in ${this.format}.` );
+          }
         }
         this.size += this.cards[card].amount;
       }
