@@ -6,7 +6,7 @@ Finally, try <code>node check.js</code>
 
 Usage:
 
-<code>const Deck = require('./Deck.js');</code>
+<code>const Deck = require('./Deck.js');\n a</code>
   
 <code>// decklist should be string copied from cockatrice deck editor</code>
 <code>var yourDeck = new Deck(decklist, format);</code>
