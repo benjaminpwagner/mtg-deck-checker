@@ -69,20 +69,19 @@ Deck.prototype.check = function() {
         // not legal? maybe is restricted...
         if (cardData[card].legalities[this.format] === 'restricted') {
 
-          // its restricted, but are we playing just one copy? 
+          // its restricted, but are we playing just one copy?
           if (this.cards[card].amount > 1) {
             this.errors.push( `${card} is restricted.` );
           }
         }
-
-        // okay, its not legal nor restricted
         else {
+          // okay, its not legal nor restricted
           this.errors.push( `${card} is not legal in ${this.format}.` );
         }
       }
 
-      // card is legal, make sure there is valid amounts
       else {
+        // card is legal, make sure there is valid amounts
         if (this.cards[card].amount > 4 && CYCHMTFO.indexOf(card) === -1) {
           this.errors.push( `Deck has more than 4 ${card}.` );
         }
@@ -99,7 +98,7 @@ Deck.prototype.check = function() {
     if (this.size < 60) this.errors.push( `Deck has less than 60 cards.` );
   }
 
-  // if no errors were found, the fuck must be legal
+  // if no errors were found, the deck must be legal
   if (this.errors.length === 0) this.isLegal = true;
 
 
