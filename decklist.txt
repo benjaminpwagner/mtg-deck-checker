@@ -1,25 +1,9 @@
-// 60 Maindeck
-// 4 Artifact
-4 Mishra's Bauble
 
-// 15 Creature
-4 Death's Shadow
-3 Gurmag Angler
-3 Snapcaster Mage
-4 Street Wraith
-1 Tasigur, the Golden Fang
-
-// 16 Instant
-2 Dismember
-2 Fatal Push
-1 Kolaghan's Command
-2 Lightning Bolt
-3 Stubborn Denial
 2 Temur Battle Rage
 4 Thought Scour
 
 // 17 Land
-1 Ancestral Recall
+2 Ancestral Recall
 4 Bloodstained Mire
 1 Island
 4 Polluted Delta
@@ -41,16 +25,5 @@ SB: 2 Engineered Explosives
 // 2 Creature
 SB: 2 Grim Lavamancer
 
-// 6 Instant
-SB: 1 Abrade
-SB: 1 Ceremonious Rejection
-SB: 2 Disdainful Stroke
-SB: 1 Kolaghan's Command
-SB: 1 Stubborn Denial
 
-// 3 Planeswalker
-SB: 1 Liliana of the Veil
-SB: 2 Liliana, the Last Hope
-
-// 2 Sorcery
 SB: 2 Collective Brutality
