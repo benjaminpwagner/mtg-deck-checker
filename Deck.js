@@ -61,9 +61,9 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   const cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
 
   if (this.format === 'historic') {
+    const historic = JSON.parse(fs.readFileSync(`./json/historic.json`));
     var standardsInDeck = [];
-    var standard;
-    var currStandard;
+    var standard, currStandard, errMsg;
     var cardsToIgnore = [
       'Island',
       'Plains',
@@ -76,11 +76,12 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
 
-        // see what standards our cards are allowed in, rank by amount
+        // see what standards our cards are allowed in
         for (var i=0; i<cardData[card].standards.length; i++) {
           standard = cardData[card].standards[i];
           if (cardsToIgnore.indexOf(card) === -1) {
-            currStandard = standardsInDeck.filter( stdObj => stdObj.standard === standard )[0];
+            currStandard = standardsInDeck
+              .filter( stdObj => stdObj.standard === standard )[0];
             if (currStandard !== undefined) {
               currStandard.amount += 1;
             } else {
@@ -95,6 +96,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
       }
     }
 
+    // grab relevant standards
     standardsInDeck = standardsInDeck
       .sort( (a,b) => b.amount - a.amount )
       .filter( stdObj => stdObj.amount > 4);
@@ -108,8 +110,16 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
 
       for (card in this.cards) {
         if (this.cards.hasOwnProperty(card)) {
+
           if (cardData[card].standards.indexOf(currStandard.standard) === -1) {
             currStdIsLegal = false;
+          }
+
+          // check for banned cards
+          if (historic.banlist.indexOf(card) !== -1) {
+            currStdIsLegal = false;
+            errMsg = `${card} is banned in historic standard.`
+            if (this.errors.indexOf(errMsg) === -1) this.errors.push(errMsg)
           }
         }
       }
@@ -117,6 +127,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
     }
     if (this.legalStandards.length === 0) this.errors.push("Deck not legal in any historic standards.")
   }
+
 
   // do checks for all other formats
   else {
@@ -163,34 +174,12 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   // if no errors were found, the deck must be legal
   if (this.errors.length === 0) {
     this.isLegal = true;
-  } else {
-    for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
   }
 
-
-  // potentially obsolete code below
-  // whitelisting may be optimal for server
-
-  // const whitelist = JSON.parse(fs.readFileSync(`./whitelists/${this.format}.json`));
-  // for (card in this.cards) {
-  //   if (this.cards.hasOwnProperty(card)) {
-  //     if (format === 'vintage') {
-  //       if (whitelist['whitelist'].indexOf(this.cards[card].name) === -1) {
-  //         if (whitelist['restricted'].indexOf(this.cards[card].name) === -1) {
-  //           return false;
-  //         } else {
-  //           if (this.cards[card].amount > 1) {
-  //             return false;
-  //           }
-  //         }
-  //       }
-  //     } else {
-  //       if (whitelist.indexOf(this.cards[card].name) === -1) {
-  //         return false;
-  //       }
-  //     }
-  //   }
-  // }
+  // errors were found, this.isLegal remains false and print errors
+  else {
+    for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
+  }
 }
 
 module.exports = {
