@@ -69,7 +69,7 @@ Deck.prototype.check = function() {
         // not legal? maybe is restricted...
         if (cardData[card].legalities[this.format] === 'restricted') {
 
-          // its restricted, but are we playing just one copy?
+          // its restricted, but are we playing just one copy? 
           if (this.cards[card].amount > 1) {
             this.errors.push( `${card} is restricted.` );
           }
