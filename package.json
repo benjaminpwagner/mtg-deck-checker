@@ -8,7 +8,5 @@
   },
   "author": "benjaminpwagner@gmail.com",
   "license": "ISC",
-  "dependencies": {
-    "scryfall-client": "^0.7.0"
-  }
+  "dependencies": {}
 }
