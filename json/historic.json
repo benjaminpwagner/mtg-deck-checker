@@ -1,156 +1,210 @@
-[
-  [
-    "4ed",
-    "drk",
-    "fem"
+{
+  "banlist": [
+    "Balance",
+    "Jace, the Mind Sculptor",
+    "Memory Jar",
+    "Mind Over Matter",
+    "Mind Twist",
+    "Skullclamp",
+    "Time Spiral",
+    "Tolarian Academy"
   ],
-  [
-    "4ed",
-    "chr",
-    "fem",
-    "ice",
-    "hml",
-    "all",
-    "mir"
+  "1st": [
+    "4ED",
+    "DRK",
+    "FEM"
   ],
-  [
-    "4ed",
-    "chr",
-    "all",
-    "mir",
-    "vis"
+  "2nd": [
+    "4ED",
+    "CHR",
+    "FEM",
+    "ICE",
+    "HML",
+    "ALL",
+    "MIR"
   ],
-  [
-    "5ed",
-    "ice",
-    "all",
-    "hml",
-    "mir",
-    "vis",
-    "wth"
+  "3rd": [
+    "4ED",
+    "CHR",
+    "ALL",
+    "MIR",
+    "VIS"
   ],
-  [
-    "5ed",
-    "mir",
-    "vis",
-    "wth",
-    "tmp",
-    "sth",
-    "exo"
+  "4th": [
+    "5ED",
+    "ICE",
+    "ALL",
+    "HML",
+    "MIR",
+    "VIS",
+    "WTH"
   ],
-  [
-    "5ed",
-    "tmp",
-    "sth",
-    "exo",
-    "usg",
-    "ulg",
+  "5th": [
+    "5ED",
+    "MIR",
+    "VIS",
+    "WTH",
+    "TMP",
+    "STH",
+    "EXO"
   ],
-  [
-    "6ed",
-    "tmp",
-    "sth",
-    "exo",
-    "usg",
-    "ulg",
-    "uds"
+  "6th": [
+    "5ED",
+    "TMP",
+    "STH",
+    "EXO",
+    "USG",
+    "ULG"
   ],
-  [
-    "6ed",
-    "usg",
-    "ulg",
-    "uds",
-    "mmq",
-    "nem",
-    "pcy"
+  "7th": [
+    "6ED",
+    "TMP",
+    "STH",
+    "EXO",
+    "USG",
+    "ULG",
+    "UDS"
   ],
-  [
-    "6ed",
-    "mmq",
-    "nem",
-    "pcy",
-    "inv",
-    "pls"
+  "8th": [
+    "6ED",
+    "USG",
+    "ULG",
+    "UDS",
+    "MMQ",
+    "NEM",
+    "PCY"
   ],
-  [
-    "7ed",
-    "mmq",
-    "nem",
-    "pcy",
-    "inv",
-    "pls",
-    "apc"
+  "9th": [
+    "6ED",
+    "MMQ",
+    "NEM",
+    "PCY",
+    "INV",
+    "PLS"
   ],
-  [
-    "7ed",
-    "inv",
-    "apc",
-    "pls",
-    "ody",
-    "tor",
-    "jud"
+  "10th": [
+    "7ED",
+    "MMQ",
+    "NEM",
+    "PCY",
+    "INV",
+    "PLS",
+    "APC"
   ],
-  [
-    "7ed",
-    "ody",
-    "tor",
-    "jud"
-    "ons",
-    "lgn",
-    "scg"
+  "11th": [
+    "7ED",
+    "INV",
+    "APC",
+    "PLS",
+    "ODY",
+    "TOR",
+    "JUD"
   ],
-  [
-    "8ed",
-    "ody",
-    "tor",
-    "jud",
-    "ons",
-    "lgn",
-    "scg"
+  "12th": [
+    "7ED",
+    "ODY",
+    "TOR",
+    "JUD",
+    "ONS",
+    "LGN",
+    "SCG"
   ],
-  [
-    "8ed",
-    "ons",
-    "lgn",
-    "scg",
-    "mrd",
-    "dst",
-    "5dn"
+  "13th": [
+    "8ED",
+    "ODY",
+    "TOR",
+    "JUD",
+    "ONS",
+    "LGN",
+    "SCG"
   ],
-  [
-    "8ed",
-    "mrd",
-    "dst",
-    "5dn",
-    "chk",
-    "bok",
-    "sok"
+  "14th": [
+    "8ED",
+    "ONS",
+    "LGN",
+    "SCG",
+    "MRD",
+    "DST",
+    "5DN"
   ],
-  [
-    "9ed",
-    "mrd",
-    "dst",
-    "5dn",
-    "chk",
-    "bok",
-    "sok"
+  "15th": [
+    "8ED",
+    "MRD",
+    "DST",
+    "5DN",
+    "CHK",
+    "BOK",
+    "SOK"
   ],
-  [
-    "9ed",
-    "chk",
-    "bok",
-    "sok",
-    "rav",
-    "gpt",
-    "dis",
-    "csp"
+  "16th": [
+    "9ED",
+    "MRD",
+    "DST",
+    "5DN",
+    "CHK",
+    "BOK",
+    "SOK"
   ],
-  [
-    "9ed",
-    "rav",
-    "gpt",
-    "dis",
-    "csp",
-    "tsp",
+  "17th": [
+    "9ED",
+    "CHK",
+    "BOK",
+    "SOK",
+    "RAV",
+    "GPT",
+    "DIS",
+    "CSP"
+  ],
+  "18th": [
+    "9ED",
+    "RAV",
+    "GPT",
+    "DIS",
+    "CSP",
+    "TSP",
+    "PLC",
+    "FUT"
+  ],
+  "19th": [
+    ""
+  ],
+  "20th": [
+    ""
+  ],
+  "21st": [
+    ""
+  ],
+  "22nd": [
+    ""
+  ],
+  "23rd": [
+    ""
+  ],
+  "24th": [
+    ""
+  ],
+  "25th": [
+    ""
+  ],
+  "26th": [
+    ""
+  ],
+  "27th": [
+    ""
+  ],
+  "28th": [
+    ""
+  ],
+  "29th": [
+    ""
+  ],
+  "30th": [
+    ""
+  ],
+  "31st": [
+    ""
+  ],
+  "32nd": [
+    ""
   ]
-]
+}
