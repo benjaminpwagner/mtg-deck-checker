@@ -13,9 +13,6 @@ function Deck(decklist, format) {
 
   // check the deck and print errors
   this.check();
-  if (this.errors.length > 0) {
-    for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
-  }
 }
 
 Deck.prototype.addCard = function(card, amount) {
@@ -41,7 +38,9 @@ Deck.prototype.parseList = function() {
     });
 }
 
-Deck.prototype.check = function() {
+Deck.prototype.check = function(decklist=undefined,format=undefined) {
+  if (decklist) this.decklist = decklist;
+  if (format) this.format = format;
   this.parseList();
   this.size = 0;
   this.errors = [];
@@ -61,7 +60,7 @@ Deck.prototype.check = function() {
         'ratcolony',
         'relentlessrats',
         'shadowbornapostle'
-      ]
+      ];
 
       // check if card is legal in format
       if (cardData[card].legalities[this.format] !== 'legal') {
@@ -99,7 +98,11 @@ Deck.prototype.check = function() {
   }
 
   // if no errors were found, the deck must be legal
-  if (this.errors.length === 0) this.isLegal = true;
+  if (this.errors.length === 0) {
+    this.isLegal = true;
+  } else {
+    for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
+  }
 
 
   // potentially obsolete code below
@@ -125,6 +128,12 @@ Deck.prototype.check = function() {
   //     }
   //   }
   // }
+}
+
+Deck.prototype.update = function(decklist, format) {
+  this.decklist = decklist;
+  this.format = format;
+  this.check();
 }
 
 module.exports = {
