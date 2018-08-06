@@ -71,13 +71,13 @@
     "ULG",
     "UDS",
     "MMQ",
-    "NEM",
+    "NMS",
     "PCY"
   ],
   "9th": [
     "6ED",
     "MMQ",
-    "NEM",
+    "NMS",
     "PCY",
     "INV",
     "PLS"
@@ -85,7 +85,7 @@
   "10th": [
     "7ED",
     "MMQ",
-    "NEM",
+    "NMS",
     "PCY",
     "INV",
     "PLS",
@@ -321,7 +321,7 @@
     "6ED",
     "UDS",
     "MMQ",
-    "NEM",
+    "NMS",
     "PCY",
     "INV",
     "PLS",

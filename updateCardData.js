@@ -58,5 +58,29 @@ var getCardDataLight = () => {
   fs.writeFileSync('./json/cardDataLight.json', JSON.stringify(cardDataLight, undefined, 2));
 }
 
+var cardData = {};
+var set;
+var card;
+
+// fs.readdir('./temp_json/json/', (err, files) => {
+//   files.forEach(file => {
+//     if (file.replace(/[a-zA-Z0-9]+/, '') === '.json' && file.charAt(0) !== 'p' && file.charAt(0) !== 'V') {
+//       set = JSON.parse(fs.readFileSync(`./temp_json/json/${file}`));
+//       for (var i=0; i<set.cards.length; i++) {
+//         card = set.cards[i];
+//         if (cardData.hasOwnProperty(card.name) === false) {
+//           cardData[card.name] = {
+//             name: card.name,
+//             legalities: card.legalities,
+//             colorIdentity: card.colorIdentity,
+//             sets: card.printings
+//           }
+//         }
+//       }
+//       fs.writeFileSync('./json/cardData.json', JSON.stringify(cardData, undefined, 2));
+//     }
+//   });
+// });
+
 // getCardData();
 // getCardDataLight();
