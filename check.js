@@ -16,8 +16,8 @@ fs.readFile('decklist.txt', 'utf8', function(err, decklist) {
   var deck = new Deck.Deck(decklist, format)
   checkLegality(deck);
 
-  format = 'modern';
-  deck.check(decklist, format);
+  format = 'commander';
+  deck.check(undefined, format);
   checkLegality(deck);
 });
 

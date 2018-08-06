@@ -1,4 +1,62 @@
-// const fs = require('fs');
+const fs = require('fs');
+
+
+// ===========================
+// reformats cardData for faster indexing
+
+// var cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
+// var legalities;
+// var newCardData = {};
+//
+// for (card in cardData) {
+//   if (cardData.hasOwnProperty(card)) {
+//     // console.log(card)
+//     // console.log(cardData[card].legalities[0]);
+//     if (cardData[card].legalities !== undefined) {
+//       legalities = {};
+//       for (var i=0; i<cardData[card].legalities.length; i++) {
+//         legalities[cardData[card].legalities[i].format.toLowerCase()] = cardData[card].legalities[i].legality.toLowerCase();
+//       }
+//       cardData[card].legalities = legalities;
+//     }
+//   }
+// }
+// fs.writeFileSync('./json/cardData.json', JSON.stringify(cardData, undefined, 2));
+
+
+// ===========================
+// used mtgjson to grab json data for every set
+// then went through every set and collect trimmed down card data
+//   while ignoring cards from extraneous sets to trim file size
+
+// var cardData = {};
+// var set;
+// var card;
+
+// fs.readdir('./mtgjson/sets', (err, files) => {
+//   files.forEach(file => {
+//     if (file.replace(/[a-zA-Z0-9]+/, '') === '.json' && file.charAt(0) !== 'p' && file.charAt(0) !== 'V') {
+//       set = JSON.parse(fs.readFileSync(`./temp_json/json/${file}`));
+//       for (var i=0; i<set.cards.length; i++) {
+//         card = set.cards[i];
+//         if (cardData.hasOwnProperty(card.name) === false) {
+//           cardData[card.name] = {
+//             name: card.name,
+//             legalities: card.legalities,
+//             colorIdentity: card.colorIdentity,
+//             sets: card.printings
+//           }
+//         }
+//       }
+//       fs.writeFileSync('./json/cardData.json', JSON.stringify(cardData, undefined, 2));
+//     }
+//   });
+// });
+
+
+
+// ===========================
+// potentially outdated code
 
 // var ScryfallClient = require('scryfall-client');
 // var scryfall = new ScryfallClient();
@@ -57,38 +115,6 @@
 //   }
 //   fs.writeFileSync('./json/cardDataLight.json', JSON.stringify(cardDataLight, undefined, 2));
 // }
-
-
-
-
-
-// used mtgjson to grab json data for every set
-// then went through every set and collect trimmed down card data
-//   while ignoring cards from extraneous sets to trim file size
-
-// var cardData = {};
-// var set;
-// var card;
-
-// fs.readdir('./mtgjson/sets', (err, files) => {
-//   files.forEach(file => {
-//     if (file.replace(/[a-zA-Z0-9]+/, '') === '.json' && file.charAt(0) !== 'p' && file.charAt(0) !== 'V') {
-//       set = JSON.parse(fs.readFileSync(`./temp_json/json/${file}`));
-//       for (var i=0; i<set.cards.length; i++) {
-//         card = set.cards[i];
-//         if (cardData.hasOwnProperty(card.name) === false) {
-//           cardData[card.name] = {
-//             name: card.name,
-//             legalities: card.legalities,
-//             colorIdentity: card.colorIdentity,
-//             sets: card.printings
-//           }
-//         }
-//       }
-//       fs.writeFileSync('./json/cardData.json', JSON.stringify(cardData, undefined, 2));
-//     }
-//   });
-// });
 
 // getCardData();
 // getCardDataLight();

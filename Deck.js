@@ -46,7 +46,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   this.errors = [];
   this.isLegal = false;
 
-  const cardData = JSON.parse(fs.readFileSync(`./json/cardDataLight.json`));
+  const cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
   for (card in this.cards) {
     if (this.cards.hasOwnProperty(card)) {
 
