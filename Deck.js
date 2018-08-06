@@ -46,47 +46,110 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
   this.errors = [];
   this.isLegal = false;
 
+  const CYCHMTFO = [ //cardsYouCanHaveMoreThanFourOf
+    'Island',
+    'Plains',
+    'Swamp',
+    'Forest',
+    'Mountain',
+    'Wastes',
+    'Rat Colony',
+    'Relentless Rats',
+    'Shadowborn Apostle'
+  ];
+
   const cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
-  for (card in this.cards) {
-    if (this.cards.hasOwnProperty(card)) {
 
-      const CYCHMTFO = [ //cardsYouCanHaveMoreThanFourOf
-        'island',
-        'plains',
-        'swamp',
-        'forest',
-        'mountain',
-        'wastes',
-        'ratcolony',
-        'relentlessrats',
-        'shadowbornapostle'
-      ];
+  if (this.format === 'historic') {
+    var standardsInDeck = [];
+    var standard;
+    var currStandard;
+    var cardsToIgnore = [
+      'Island',
+      'Plains',
+      'Swamp',
+      'Forest',
+      'Mountain',
+      'Wastes'
+    ];
 
-      // check if card is legal in format
-      if (cardData[card].legalities[this.format] !== 'legal') {
+    for (card in this.cards) {
+      if (this.cards.hasOwnProperty(card)) {
 
-        // not legal? maybe is restricted...
-        if (cardData[card].legalities[this.format] === 'restricted') {
+        // see what standards our cards are allowed in, rank by amount
+        for (var i=0; i<cardData[card].standards.length; i++) {
+          standard = cardData[card].standards[i];
+          if (cardsToIgnore.indexOf(card) === -1) {
+            currStandard = standardsInDeck.filter( stdObj => stdObj.standard === standard )[0];
+            if (currStandard !== undefined) {
+              currStandard.amount += 1;
+            } else {
+              standardsInDeck.push({
+                standard,
+                amount: 1
+              });
+            }
+          }
+        }
+        this.size += this.cards[card].amount
+      }
+    }
 
-          // its restricted, but are we playing just one copy?
-          if (this.cards[card].amount > 1) {
-            this.errors.push( `${card} is restricted.` );
+    standardsInDeck = standardsInDeck
+      .sort( (a,b) => b.amount - a.amount )
+      .filter( stdObj => stdObj.amount > 4);
+
+    // see which standards are in all cardData[card].standards
+    this.legalStandards = [];
+    var currStdIsLegal = true;
+
+    for (var i=0; i<standardsInDeck.length; i++) {
+      currStandard = standardsInDeck[i];
+
+      for (card in this.cards) {
+        if (this.cards.hasOwnProperty(card)) {
+          if (cardData[card].standards.indexOf(currStandard.standard) === -1) {
+            currStdIsLegal = false;
+          }
+        }
+      }
+      if (currStdIsLegal) this.legalStandards.push(currStandard.standard);
+    }
+    if (this.legalStandards.length === 0) this.errors.push("Deck not legal in any historic standards.")
+  }
+
+  // do checks for all other formats
+  else {
+    for (card in this.cards) {
+      if (this.cards.hasOwnProperty(card)) {
+
+        // check if card is legal in format
+        if (cardData[card].legalities[this.format] !== 'legal') {
+
+          // not legal? maybe is restricted...
+          if (cardData[card].legalities[this.format] === 'restricted') {
+
+            // its restricted, but are we playing just one copy?
+            if (this.cards[card].amount > 1) {
+              this.errors.push( `${card} is restricted.` );
+            }
           }
         }
         else {
           // okay, its not legal nor restricted
           this.errors.push( `${card} is not legal in ${this.format}.` );
         }
+        this.size += this.cards[card].amount;
       }
+    }
+  }
 
-      else {
-        // card is legal, make sure there is valid amounts
-        if (this.cards[card].amount > 4 && CYCHMTFO.indexOf(card) === -1) {
-          this.errors.push( `Deck has more than 4 ${card}.` );
-        }
+  // make sure there is valid amounts per card
+  for (card in this.cards) {
+    if (this.cards.hasOwnProperty(card)) {
+      if (this.cards[card].amount > 4 && CYCHMTFO.indexOf(card) === -1) {
+        this.errors.push( `Deck has more than 4 ${card}.` );
       }
-
-      this.size += this.cards[card].amount
     }
   }
 

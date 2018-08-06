@@ -1,5 +1,29 @@
 const fs = require('fs');
 
+// ===========================
+// add historic standard blocks to card legality
+
+var cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
+var historic = JSON.parse(fs.readFileSync(`./json/historic.json`));
+
+for (card in cardData) {
+  if (cardData.hasOwnProperty(card)) {
+    cardData[card]['standards'] = [];
+    for (standard in historic) {
+      if (historic.hasOwnProperty(standard)) {
+        if (standard !== 'banlist' && standard !== 'sets' && cardData[card].legalities !== undefined) {
+          for (var i=0; i<cardData[card].sets.length; i++) {
+            if (historic[standard].indexOf(cardData[card].sets[i]) !== -1) {
+              cardData[card]['standards'].push(standard)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+fs.writeFileSync('./json/cardData.json', JSON.stringify(cardData, undefined, 2));
+
 
 // ===========================
 // reformats cardData for faster indexing

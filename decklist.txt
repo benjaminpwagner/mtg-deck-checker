@@ -1,29 +1,75 @@
+// sb
 
-2 Temur Battle Rage
-4 Thought Scour
+//
+// 1 ivory tower
+// 4 nevinyrral's disk
+// 1 zuran orb
+// 4 hypnotic specter
+// 4 black knight
+// 1 triskelion
+// 4 necropotence
+// 4 dark ritual
+//
+// 1 demonic consultation
+// 4 contagion
+// 19 swamp
+// 4 strip mine
+// 1 mishra's factory
+// 4 drain life
+// 4 hymn to tourach
+//
+// 2 tormod's crypt
+// 1 triskelion
+// 1 sengir vampire
+// 2 gloom
+// 1 deathgrip
+// 4 terror
+// 4 icequake
+//
 
-// 17 Land
-2 Ancestral Recall
-4 Bloodstained Mire
-1 Island
-4 Polluted Delta
-2 Scalding Tarn
-1 Steam Vents
-1 Swamp
-2 Watery Grave
+// 60 Maindeck
+// 6 Artifact
+1 Ivory Tower
+4 Nevinyrral's Disk
+1 Zuran Orb
+
+// 9 Creature
+4 Hypnotic Specter
+4 Black Knight
+1 Triskelion
+
+// 4 Enchantment
+4 Necropotence
+
+// 9 Instant
+4 Dark Ritual
+1 Demonic Consultation
+4 Contagion
+
+// 24 Land
+19 Swamp
+4 Strip Mine
+1 Mishra's Factory
 
 // 8 Sorcery
-2 Faithless Looting
-2 Inquisition of Kozilek
-4 Thoughtseize
+4 Drain Life
+4 Hymn to Tourach
 
 
 // 15 Sideboard
 // 2 Artifact
-SB: 2 Engineered Explosives
+SB: 2 Tormod's Crypt
 
 // 2 Creature
-SB: 2 Grim Lavamancer
+SB: 1 Triskelion
+SB: 1 Sengir Vampire
 
+// 3 Enchantment
+SB: 2 Gloom
+SB: 1 Deathgrip
 
-SB: 2 Collective Brutality
+// 4 Instant
+SB: 4 Terror
+
+// 4 Sorcery
+SB: 4 Icequake
