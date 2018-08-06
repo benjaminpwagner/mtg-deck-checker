@@ -62,7 +62,12 @@ var cardData = {};
 var set;
 var card;
 
-// fs.readdir('./temp_json/json/', (err, files) => {
+
+
+// used mtgjson to grab json data for every sets
+// go through every set and collect trimmed down card data
+
+// fs.readdir('./mtgjson/sets', (err, files) => {
 //   files.forEach(file => {
 //     if (file.replace(/[a-zA-Z0-9]+/, '') === '.json' && file.charAt(0) !== 'p' && file.charAt(0) !== 'V') {
 //       set = JSON.parse(fs.readFileSync(`./temp_json/json/${file}`));
