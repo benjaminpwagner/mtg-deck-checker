@@ -1,15 +1,34 @@
 {
   "name": "mtg-deck-checker",
   "version": "1.0.0",
-  "description": "Universal deck validator for popular card game Magic the Gathering",
-  "main": "check.js",
+  "description": "Magic the Gathering deck validator for all formats.",
+  "main": "Deck.js",
+  "dependencies": {
+    "js-sha1" : "~0.6.0"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminpwagner/mtg-deck-checker.git"
+  },
+  "keywords": [
+    "mtg",
+    "magic-the-gathering",
+    "deck-check",
+    "deck-checker",
+    "deckcheck",
+    "deckchecker",
+    "deck-validator",
+    "mtg-deck-checker",
+    "mtg-deck-validator"
+  ],
   "author": "benjaminpwagner@gmail.com",
-  "license": "ISC",
-  "dependencies": {
-    "sha1": "^1.1.1",
-    "utf8": "^3.0.0"
-  }
+  "license": "BSD3",
+  "bugs": {
+    "url": "https://github.com/benjaminpwagner/mtg-deck-checker/issues"
+  },
+  "homepage": "https://github.com/benjaminpwagner/mtg-deck-checker#readme"
 }
