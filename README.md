@@ -1,16 +1,12 @@
-First run <code>npm install</code>
-
-Then, put your decklist in <code>decklist.txt</code>
-
-Finally, try <code>node check.js</code>
-
 Usage:
 
-<code>const Deck = require('./Deck.js');</code>
-  
-var decklist should be string copied from cockatrice deck editor
+<code>npm i --save mtg-deck-checker</code>
 
-<code>var yourDeck = new Deck(decklist, format);</code>
+<code>const Deck = require('mtg-deck-checker');</code>
+  
+<code>var decklist</code> assumes cockatrice deck editor format, but many other formats are supported incidentally.
+
+<code>var yourDeck = new Deck.Deck(decklist, format);</code>
   
 Deck constructor will automatically run <code>yourDeck.check()</code>
 
