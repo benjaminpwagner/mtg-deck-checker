@@ -27,7 +27,7 @@
     "mtg-deck-validator"
   ],
   "author": "benjaminpwagner@gmail.com",
-  "license": "BSD3",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/benjaminpwagner/mtg-deck-checker/issues"
   },
