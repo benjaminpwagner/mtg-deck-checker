@@ -1,5 +1,6 @@
 const fs = require('fs');
 const sha1 = require('js-sha1');
+let BigInteger = require('jsbn').BigInteger;
 
 function Deck(decklist, format) {
 
@@ -70,23 +71,25 @@ Deck.prototype.parseList = function() {
   this.cards = {};
   this.main = {};
   this.side = {};
-  var regexData;
+  let regexData;
   this.list
     .split('\n')
     .forEach(line => {
       if(line !== '' && line.indexOf('//') === -1) {
         regexData = line.match(/[0-9]+/);
-        var name = line.slice(regexData[0].length+regexData.index+1);
-        var amount = parseInt(regexData[0])
+        let name = line.slice(regexData[0].length+regexData.index+1);
+        let amount = parseInt(regexData[0])
         this.addCard( name, amount, line.indexOf('SB') === -1 );
       }
     });
+}
 
-  var toHash = [];
+Deck.prototype.getHash = function() {
+  let toHash = [];
 
   for (card in this.main) {
     if (this.main.hasOwnProperty(card)) {
-      for (var i=0; i<this.main[card].amount; i++) {
+      for (let i=0; i<this.main[card].amount; i++) {
         toHash.push(card.toLowerCase());
       }
     }
@@ -94,33 +97,35 @@ Deck.prototype.parseList = function() {
 
   for (card in this.side) {
     if (this.side.hasOwnProperty(card)) {
-      for (var i=0; i<this.side[card].amount; i++) {
+      for (let i=0; i<this.side[card].amount; i++) {
         toHash.push(`SB:${card.toLowerCase()}`);
       }
     }
   }
 
-  toHash = toHash.sort();
+  let sha = sha1.array( toHash.sort().join(';') );
+  let bnShaSum = new BigInteger('0');
+  let bnShaArr = [];
 
-  console.log(toHash);
+  for (let i=0; i<5; i++) {
+    bnShaArr.push( new BigInteger( sha[i].toString() ) )
+  }
 
-  var sha = sha1.array( toHash.join(';') );
-  console.log(sha)
-  var byte1 = sha[0] << 32;
-  var byte2 = sha[1] << 24;
-  var byte3 = sha[2] << 16;
-  var byte4 = sha[3] << 8;
-  var byte5 = sha[4]
-  console.log(byte1, byte2, byte3, byte4, byte5);
-  console.log((byte1 + byte2 + byte3 + byte4 + byte5).toString(16));
-  console.log((byte1 + byte2 + byte3 + byte4 + byte5).toString(32));
-  console.log('558c3e67')
+  bnShaSum = bnShaSum
+    .add( bnShaArr[0].shiftLeft(32) )
+    .add( bnShaArr[1].shiftLeft(24) )
+    .add( bnShaArr[2].shiftLeft(16) )
+    .add( bnShaArr[3].shiftLeft( 8) )
+    .add( bnShaArr[4] );
+
+  this.hash = bnShaSum.toString(32);
 }
 
 Deck.prototype.check = function(decklist=undefined,format=undefined) {
   if (decklist) this.decklist = decklist;
   if (format) this.format = format;
   this.parseList();
+  this.getHash();
   this.size = 0;
   this.errors = [];
   this.isLegal = false;
@@ -141,9 +146,9 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
 
   if (this.format === 'historic') {
     const historic = JSON.parse(fs.readFileSync(`./json/historic.json`));
-    var standardsInDeck = [];
-    var standard, currStandard, errMsg;
-    var cardsToIgnore = [
+    let standardsInDeck = [];
+    let standard, currStandard, errMsg;
+    let cardsToIgnore = [
       'Island',
       'Plains',
       'Swamp',
@@ -156,7 +161,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
       if (this.cards.hasOwnProperty(card)) {
 
         // see what standards our cards are allowed in
-        for (var i=0; i<cardData[card].standards.length; i++) {
+        for (let i=0; i<cardData[card].standards.length; i++) {
           standard = cardData[card].standards[i];
           if (cardsToIgnore.indexOf(card) === -1) {
             currStandard = standardsInDeck
@@ -182,9 +187,9 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
 
     // see which standards are in all cardData[card].standards
     this.legalStandards = [];
-    var currStdIsLegal = true;
+    let currStdIsLegal = true;
 
-    for (var i=0; i<standardsInDeck.length; i++) {
+    for (let i=0; i<standardsInDeck.length; i++) {
       currStandard = standardsInDeck[i];
 
       for (card in this.cards) {
@@ -258,7 +263,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
 
   // errors were found, this.isLegal remains false and print errors
   else {
-    for(var i=0; i<this.errors.length; i++) console.log(this.errors[i])
+    for(let i=0; i<this.errors.length; i++) console.log(this.errors[i])
   }
 
 }

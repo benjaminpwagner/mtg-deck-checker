@@ -1,32 +1,3 @@
-// sb
-
-//
-// 1 ivory tower
-// 4 nevinyrral's disk
-// 1 zuran orb
-// 4 hypnotic specter
-// 4 black knight
-// 1 triskelion
-// 4 necropotence
-// 4 dark ritual
-//
-// 1 demonic consultation
-// 4 contagion
-// 19 swamp
-// 4 strip mine
-// 1 mishra's factory
-// 4 drain life
-// 4 hymn to tourach
-//
-// 2 tormod's crypt
-// 1 triskelion
-// 1 sengir vampire
-// 2 gloom
-// 1 deathgrip
-// 4 terror
-// 4 icequake
-//
-
 // 60 Maindeck
 // 6 Artifact
 1 Ivory Tower

@@ -4,7 +4,8 @@
   "description": "Magic the Gathering deck validator for all formats.",
   "main": "Deck.js",
   "dependencies": {
-    "js-sha1" : "~0.6.0"
+    "js-sha1": "~0.6.0",
+    "jsbn": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
