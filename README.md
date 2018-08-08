@@ -24,6 +24,8 @@ You can add cards to your deck, then check if it is still legal
 
 <code>yourDeck.check();</code>
 
+Access mainboard/sideboard directly with <code>yourDeck.main, yourDeck.side</code>
+
 
 TODO:
 - add checks for commander to make sure all cards are within commanders color identity 
