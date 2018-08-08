@@ -11,6 +11,8 @@ Usage:
 Deck constructor will automatically run <code>yourDeck.check()</code>
 
 <code>console.log(yourDeck.isLegal, yourDeck.errors);</code>
+
+You can see you deck hash with <code>yourDeck.hash</code>
   
 if you want to keep the same obj but update the deck or format
 
