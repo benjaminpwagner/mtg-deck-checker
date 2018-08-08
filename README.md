@@ -28,5 +28,3 @@ You can add cards to your deck, then check if it is still legal
 TODO:
 - add checks for commander to make sure all cards are within commanders color identity 
 - add permamnent script to pull from mtgjson to update our cardData.json
-- add support for Deck.mainboard / Deck.sideboard
-- deck hash
