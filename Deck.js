@@ -1,7 +1,9 @@
 const fs = require('fs');
 const sha1 = require('js-sha1');
 let BigInteger = require('jsbn').BigInteger;
+
 const update = require('./updateCardData.js');
+const updateCardData = () => update.update();
 
 function Deck(decklist, format) {
 
@@ -34,10 +36,6 @@ function Deck(decklist, format) {
   // check the deck and print errors
   this.check();
 }
-
-Deck.prototype.update = function() {
-  update.update();
-};
 
 Deck.prototype.addCard = function(card, amount, inMain=true) {
   if (this.cards.hasOwnProperty(card)) {
@@ -285,5 +283,6 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
 }
 
 module.exports = {
-  Deck
+  Deck,
+  updateCardData
 }

@@ -3,6 +3,8 @@ Usage:
 <code>npm i --save mtg-deck-checker</code>
 
 <code>const Deck = require('mtg-deck-checker');</code>
+
+Update your cardData.json with <code>Deck.updateCardData()</code>
   
 <code>var decklist</code> assumes cockatrice deck editor format, but many other formats are supported incidentally.
 
@@ -29,4 +31,3 @@ Access mainboard/sideboard directly with <code>yourDeck.main, yourDeck.side</cod
 
 TODO:
 - add checks for commander to make sure all cards are within commanders color identity 
-- add permamnent script to pull from mtgjson to update our cardData.json
