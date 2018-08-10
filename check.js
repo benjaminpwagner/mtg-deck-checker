@@ -18,10 +18,11 @@ let checkLegality = (deck) => {
   console.log(`Deck hash: ${deck.hash}`);
 }
 
-fs.readFile('decklist.txt', 'utf8', function(err, decklist) {
+fs.readFile('decklist2.txt', 'utf8', function(err, decklist) {
   if (err) throw err;
 
-  let format = 'historic';
+
+  let format = 'modern';
   let deck = new Deck.Deck(decklist, format)
   checkLegality(deck);
 

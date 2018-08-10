@@ -1,6 +1,7 @@
 const fs = require('fs');
 const sha1 = require('js-sha1');
 let BigInteger = require('jsbn').BigInteger;
+const update = require('./updateCardData.js');
 
 function Deck(decklist, format) {
 
@@ -33,6 +34,10 @@ function Deck(decklist, format) {
   // check the deck and print errors
   this.check();
 }
+
+Deck.prototype.update = function() {
+  update.update();
+};
 
 Deck.prototype.addCard = function(card, amount, inMain=true) {
   if (this.cards.hasOwnProperty(card)) {
@@ -142,42 +147,49 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
     'Shadowborn Apostle'
   ];
 
+  let cardsToIgnore = [
+    'Island',
+    'Plains',
+    'Swamp',
+    'Forest',
+    'Mountain',
+    'Wastes'
+  ];
+
   const cardData = JSON.parse(fs.readFileSync(`./json/cardData.json`));
 
   if (this.format === 'historic') {
     const historic = JSON.parse(fs.readFileSync(`./json/historic.json`));
     let standardsInDeck = [];
     let standard, currStandard, errMsg;
-    let cardsToIgnore = [
-      'Island',
-      'Plains',
-      'Swamp',
-      'Forest',
-      'Mountain',
-      'Wastes'
-    ];
 
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
 
-        // see what standards our cards are allowed in
-        for (let i=0; i<cardData[card].standards.length; i++) {
-          standard = cardData[card].standards[i];
-          if (cardsToIgnore.indexOf(card) === -1) {
+        if (cardsToIgnore.indexOf(card) === - 1) {
+          
+          // see what standards our cards are allowed in
+          for (let i=0; i<cardData[card].standards.length; i++) {
+
+            standard = cardData[card].standards[i];
+
             currStandard = standardsInDeck
               .filter( stdObj => stdObj.standard === standard )[0];
+
             if (currStandard !== undefined) {
               currStandard.amount += 1;
             } else {
+
               standardsInDeck.push({
                 standard,
                 amount: 1
               });
+
             }
           }
         }
-        this.size += this.cards[card].amount
       }
+      this.size += this.cards[card].amount
     }
 
     // grab relevant standards
@@ -193,7 +205,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
       currStandard = standardsInDeck[i];
 
       for (card in this.cards) {
-        if (this.cards.hasOwnProperty(card)) {
+        if (this.cards.hasOwnProperty(card) && cardsToIgnore.indexOf(card) === - 1) {
 
           if (cardData[card].standards.indexOf(currStandard.standard) === -1) {
             currStdIsLegal = false;
@@ -205,7 +217,7 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
             errMsg = `${card} is banned in historic standard.`
             if (this.errors.indexOf(errMsg) === -1) this.errors.push(errMsg)
           }
-        }
+        } 
       }
       if (currStdIsLegal) this.legalStandards.push(currStandard.standard);
     }
@@ -218,23 +230,27 @@ Deck.prototype.check = function(decklist=undefined,format=undefined) {
     for (card in this.cards) {
       if (this.cards.hasOwnProperty(card)) {
 
-        // check if card is legal in format
-        if (cardData[card].legalities[this.format] !== 'legal') {
+        if (cardsToIgnore.indexOf(card) === -1) {
 
-          // not legal? maybe is restricted...
-          if (cardData[card].legalities[this.format] === 'restricted' && this.format === 'vintage') {
+          // check if card is legal in format
+          if (cardData[card].legalities[this.format] !== 'legal') {
 
-            // its restricted, but are we playing just one copy?
-            if (this.cards[card].amount > 1) {
-              this.errors.push( `${card} is restricted.` );
+            // not legal? maybe is restricted...
+            if (cardData[card].legalities[this.format] === 'restricted' && this.format === 'vintage') {
+
+              // its restricted, but are we playing just one copy?
+              if (this.cards[card].amount > 1) {
+                this.errors.push( `${card} is restricted.` );
+              }
+            }
+
+            // okay, its not legal nor restricted
+            else {
+              this.errors.push( `${card} is not legal in ${this.format}.` );
             }
           }
-
-          // okay, its not legal nor restricted
-          else {
-            this.errors.push( `${card} is not legal in ${this.format}.` );
-          }
         }
+
         this.size += this.cards[card].amount;
       }
     }
