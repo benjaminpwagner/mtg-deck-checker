@@ -5,7 +5,8 @@
   "main": "Deck.js",
   "dependencies": {
     "js-sha1": "~0.6.0",
-    "jsbn": "^1.1.0"
+    "jsbn": "^1.1.0",
+    "mtgjson-promise": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
